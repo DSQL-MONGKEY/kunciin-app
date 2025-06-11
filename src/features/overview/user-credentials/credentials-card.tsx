@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { IconBuildingLighthouse, IconDeviceAirtag } from "@tabler/icons-react";
+import { IconBuildingLighthouse, IconFileTextShield } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -28,14 +28,14 @@ export function CredentialsCard() {
             <CardAction>
                <Badge variant='outline'>
                <IconBuildingLighthouse />
-               Device
+               Credentials
                </Badge>
             </CardAction>
          </CardHeader>
          <CardFooter className='flex-col items-start gap-1.5 text-sm'>
             <div className='line-clamp-1 flex gap-2 font-medium'>
                Active Credentials
-               <IconDeviceAirtag className='size-4' />
+               <IconFileTextShield className='size-4' />
             </div>
             <div className='text-muted-foreground'>
                Currently used and active credentials
