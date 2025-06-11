@@ -7,7 +7,7 @@ import { fetcher } from "@/lib/fetcher";
 import { DataTableSkeleton } from "@/components/ui/table/data-table-skeleton";
 import { toast } from "sonner";
 
-export default function RegisterListingTable() {
+export default function LogListingTable() {
    const { data:response, error, isLoading } = useSWR('/api/door-logs', fetcher);
 
    if(isLoading) {

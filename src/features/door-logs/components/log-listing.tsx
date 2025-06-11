@@ -1,5 +1,5 @@
 import { searchParamsCache } from '@/lib/searchparams';
-import RegisterListingTable from './log-listing-table';
+import LogListingTable from './log-listing-table';
 
 type LogListingPage = {};
 
@@ -19,6 +19,6 @@ export default async function LogListingPage({}: LogListingPage) {
   };
 
   return (
-    <RegisterListingTable />
+    <LogListingTable />
   );
 }
