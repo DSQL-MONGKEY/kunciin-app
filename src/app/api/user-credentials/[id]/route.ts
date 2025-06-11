@@ -37,7 +37,6 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       
       const { id } = await params;
       const body = await req.json();
-      console.log("TESTT");
       const { 
          fingerprintId, 
          rfId
