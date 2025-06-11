@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { IconDeviceAirtag, IconGps } from "@tabler/icons-react";
+import { IconDeviceAirtag, IconReport } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -27,8 +27,8 @@ export function DoorLogsCard() {
             </CardTitle>
             <CardAction>
                <Badge variant='outline'>
-               <IconGps />
-               Tracker
+               <IconReport />
+               Logs
                </Badge>
             </CardAction>
          </CardHeader>
