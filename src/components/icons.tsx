@@ -39,7 +39,7 @@ import {
   IconEscalatorUp,
   IconRegistered,
   IconLockAccess,
-  IconScanEye,
+  IconLockSearch,
 } from '@tabler/icons-react';
 
 export type Icon = React.ComponentType<IconProps>;
@@ -49,7 +49,7 @@ export const Icons = {
   register: IconRegistered,
   climber: IconEscalatorUp,
   userCredentials: IconLockAccess,
-  logs: IconScanEye,
+  logs: IconLockSearch,
   maps: IconMap2,
   faq: IconInfoSquareRounded,
   infra: IconHierarchy3,
