@@ -39,7 +39,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       const body = await req.json();
       const { 
          fingerprintId, 
-         rfid
+         rfid,
+         access,
       } = body;
 
       const { data, error } = await supabase
@@ -47,6 +48,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
          .update({ 
             fingerprint_id: fingerprintId,
             rifid_uid: rfid,
+            access_granted: access
          })
          .eq('id', id)
          .select()
