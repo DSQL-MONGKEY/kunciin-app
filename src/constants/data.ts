@@ -46,27 +46,6 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
-    title: 'Account',
-    url: '#', // Placeholder as there is no direct link for the parent
-    icon: 'billing',
-    isActive: false,
-
-    items: [
-      {
-        title: 'Profile',
-        url: '/dashboard/profile',
-        icon: 'userPen',
-        shortcut: ['m', 'm']
-      },
-      {
-        title: 'Login',
-        shortcut: ['l', 'l'],
-        url: '/',
-        icon: 'login'
-      }
-    ]
-  },
-  {
     title: 'FAQ',
     url: '#', // Placeholder as there is no direct link for the parent
     icon: 'faq',
