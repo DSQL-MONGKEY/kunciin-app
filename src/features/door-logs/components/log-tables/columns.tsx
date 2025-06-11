@@ -1,87 +1,58 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
-import { DataTableColumnHeader } from '@/components/ui/table/data-table-column-header';
-import { Column, ColumnDef } from '@tanstack/react-table';
-import { CheckCircle2, Text, XCircle } from 'lucide-react';
+import { ColumnDef } from '@tanstack/react-table';
+import { CheckCircle2, XCircle } from 'lucide-react';
 import { CellAction } from './cell-action';
-import {  RegisterDevices } from '@/types';
 import { formatDate } from '@/lib/format';
+import { DoorLogs } from '@/types';
 
-export const columns: ColumnDef<RegisterDevices>[] = [
+export const columns: ColumnDef<DoorLogs>[] = [
   {
     id: 'climber_users.name',
-    accessorKey: 'climber_users.name',
-    header: ({ column }: { column: Column<RegisterDevices, unknown> }) => (
-      <DataTableColumnHeader column={column} title='User' />
-    ),
+    accessorKey: 'fingerprint_id',
+    header: 'Fingerprin ID',
     cell: ({ row }) => (
-      <div className='capitalize'>
-        {row.original.climber_users?.name}
-      </div>
-    ),
-    enableColumnFilter: true,
-    meta: {
-      label: 'Username',
-      placeholder: 'Search username...',
-      variant: 'text',
-      icon: Text
-    },
-  },
-  {
-    id: 'devices.name',
-    accessorKey: 'devices.name',
-    header: ({ column }: { column: Column<RegisterDevices, unknown> }) => (
-      <DataTableColumnHeader column={column} title='Device' />
-    ),
-    cell: ({ row }) => (
-      <div className='capitalize'>
-        {row.original.devices?.name}
+      <div>
+        {row.original.fingerprint_id}
       </div>
     ),
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'type',
-    header: 'Type',
+    id: 'rfid_uid',
+    accessorKey: 'rfid_uid',
+    header: 'rfid_uid',
     cell: ({ row }) => (
       <div className='capitalize'>
-        {row.original.devices?.type}
+        {row.original.rfid_uid}
       </div>
     ),
+    enableColumnFilter: true,
   },
   {
-    accessorKey: 'is_active',
-    header: 'Status',
+    accessorKey: 'access_granted',
+    header: 'Access Status',
     cell: ({ cell }) => {
-      const status = cell.getValue<RegisterDevices['is_active']>();
+      const status = cell.getValue<DoorLogs['access_granted']>();
       const Icon = status ? CheckCircle2 : XCircle;
       
       return (
-        <Badge variant={status ? 'secondary' : 'destructive'}>
+        <Badge variant={status ? 'default' : 'destructive'}>
           <>
             <Icon />
-            {status ? 'Active' : 'Inactive'}
+            {status ? 'Granted' : 'Unverified'}
           </>
         </Badge>
       )
     },
     enableColumnFilter: true,
-    meta: {
-      label: 'Device Usage Status',
-      variant: 'multiSelect',
-      options: [
-        { label: 'Active', value: true },
-        { label: 'Inactive', value: false }
-      ],
-      icon: Text
-    }
   },
   {
-    id: 'registered_at',
-    accessorKey: 'registered_at',
-    header: 'Registered',
+    id: 'created_at',
+    accessorKey: 'created_at',
+    header: 'Created At',
     cell: ({ cell }) => {
-      const formattedDate = formatDate(cell.getValue<RegisterDevices['registered_at']>() ?? undefined, {
+      const formattedDate = formatDate(cell.getValue<DoorLogs['created_at']>() ?? undefined, {
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric',
@@ -89,46 +60,6 @@ export const columns: ColumnDef<RegisterDevices>[] = [
       });
       return (
         <span>{formattedDate}</span>
-      )
-    },
-    enableColumnFilter: true,
-  },
-  {
-    id: 'unregistered_at',
-    accessorKey: 'unregistered_at',
-    header: 'Unregistered',
-    cell: ({ cell }) => {
-      const unregisteredAt = cell.getValue<RegisterDevices['unregistered_at']>() ?? undefined;
-      const formattedDate = formatDate(unregisteredAt, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: false,
-      });
-      return (
-        <span>
-          {unregisteredAt == null ? '-' : formattedDate}
-        </span>
-      )
-    },
-    enableColumnFilter: true,
-  },
-  {
-    id: 'updated_at',
-    accessorKey: 'updated_at',
-    header: 'Last Upadated',
-    cell: ({ cell }) => {
-      const updatedAt = cell.getValue<RegisterDevices['updated_at']>() ?? undefined;
-      const formattedDate = formatDate(updatedAt, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: false,
-      });
-      return (
-        <span>
-          {updatedAt == null ? '-' : formattedDate}
-        </span>
       )
     },
     enableColumnFilter: true,
