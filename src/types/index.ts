@@ -46,3 +46,10 @@ export interface UserCredentials {
   rfid_uid: string;
   created_at: string;
 }
+export interface DoorLogs {
+  id: number;
+  fingerprint_id: number;
+  rfid_uid: string;
+  created_at: string;
+  access_granted: boolean
+}
