@@ -1,5 +1,6 @@
 'use client';
 import { AlertModal } from '@/components/modal/alert-modal';
+import { UpdateModal } from '@/components/modal/update-modal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -8,35 +9,50 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { RegisterDevices } from '@/types';
-import { IconEdit, IconDotsVertical, IconTrash, IconEye } from '@tabler/icons-react';
-import { useRouter } from 'next/navigation';
+import { UserCredentials } from '@/types';
+import { IconEdit, IconDotsVertical, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { mutate } from 'swr';
+import { updateCredentials } from '../../api/update-logs';
 
 interface CellActionProps {
-  data: RegisterDevices;
+  data: UserCredentials;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading] = useState(false);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
+  const [openUpdate, setOpenUpdate] = useState(false);
 
   const onConfirm = async () => {
     setOpen(!open);
-    const res = await fetch(`/api/register/${data.id}`, {
+    const res = await fetch(`/api/door-logs/${data.id}`, {
       method: 'DELETE',
     });
     const { success } = await res.json();
 
     if(success) {
-      mutate('/api/register-devices');
+      mutate('/api/user-credentials');
     }
 
     toast(success ? 'Deleted Successfully' : 'Failed Process', {
       description: success ? 'Record has been deleted' : 'Record not deleted'
+    });
+  };
+
+  const onConfirmUpdate = async (values: any) => {
+    setOpenUpdate(!openUpdate);
+
+    const res = await updateCredentials({...values}, data.id);
+    const { success } = await res;
+
+    if(success) {
+      mutate('/api/door-logs');
+    }
+
+    toast(success ? 'Update Successfully' : 'Failed Process', {
+      description: success ? 'Record has been updated' : 'Record not updated'
     });
   };
 
@@ -48,6 +64,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={loading}
       />
+      <UpdateModal
+        isOpen={openUpdate}
+        onClose={() => setOpenUpdate(false)}
+        onConfirmUpdate={onConfirmUpdate}
+        loading={loading}
+      />
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' className='h-8 w-8 p-0'>
@@ -57,14 +79,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/register-device/${data.id}`)}
-          >
-            <IconEye className='mr-2 h-4 w-4' /> View
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/register-device/${data.id}`)}
+            onClick={() => setOpenUpdate(true)}
           >
             <IconEdit className='mr-2 h-4 w-4' /> Update
           </DropdownMenuItem>
